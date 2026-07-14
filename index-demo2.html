@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asserbo Tagdækning ApS — Tagdækning i Nordsjælland</title>
+<meta name="description" content="Asserbo Tagdækning ApS lægger, reparerer og renoverer tage til huse og sommerhuse i Nordsjælland. Ring 22 16 74 00.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f7f6f1;
+    --ink:#14213d;
+    --ink-soft:#4a5578;
+    --line:rgba(20,33,61,0.14);
+    --line-soft:rgba(20,33,61,0.08);
+    --accent:#e8590c;
+    --accent-deep:#c2470a;
+    --white:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+  }
+
+  /* grid-paper texture */
+  .grid-bg{
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:36px 36px;
+  }
+
+  /* corner registration marks */
+  .marked{position:relative;}
+  .marked::before,.marked::after,
+  .marked .m-bl,.marked .m-br{
+    content:"";position:absolute;width:14px;height:14px;
+    border:1.5px solid var(--ink);opacity:0.55;
+  }
+  .marked::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .marked::after{top:-1px;right:-1px;border-left:none;border-bottom:none;}
+  .marked .m-bl{bottom:-1px;left:-1px;border-right:none;border-top:none;}
+  .marked .m-br{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;background:rgba(247,246,241,0.94);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;max-width:1180px;margin:0 auto;}
+  .brand{font-family:'Space Grotesk',sans-serif;font-size:1.05rem;font-weight:700;display:flex;flex-direction:column;line-height:1.15;}
+  .brand small{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;font-weight:500;color:var(--accent);letter-spacing:0.14em;text-transform:uppercase;margin-top:3px;}
+  .nav-links{display:flex;gap:30px;align-items:center;}
+  .nav-links a:not(.call-pill){font-size:0.88rem;font-weight:500;color:var(--ink-soft);position:relative;padding-bottom:3px;}
+  .nav-links a:not(.call-pill)::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width 0.2s ease;
+  }
+  .nav-links a:not(.call-pill):hover::after{width:100%;}
+  .call-pill{
+    display:flex;align-items:center;gap:8px;background:var(--accent);color:var(--white);
+    padding:9px 16px 9px 12px;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;font-weight:500;
+    white-space:nowrap;transition:background 0.2s ease;
+  }
+  .call-pill:hover{background:var(--accent-deep);}
+  .call-pill svg{width:15px;height:15px;flex:none;}
+  @media (max-width:760px){.nav-links a:not(.call-pill){display:none;}}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:60px 0 88px;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;}
+  .spec-tag{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;
+    color:var(--accent-deep);margin-bottom:20px;border:1px solid var(--line);padding:6px 12px;
+  }
+  .hero h1{font-size:clamp(2.2rem,4.4vw,3.4rem);font-weight:700;max-width:13ch;}
+  .hero p.lede{margin-top:22px;max-width:46ch;font-size:1.05rem;color:var(--ink-soft);}
+  .hero-ctas{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;font-weight:600;font-size:0.94rem;border:1px solid transparent;transition:transform 0.15s ease, background 0.2s ease;}
+  .btn-primary{background:var(--accent);color:var(--white);}
+  .btn-primary:hover{background:var(--accent-deep);transform:translateY(-1px);}
+  .btn-ghost{border-color:var(--ink);color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink);color:var(--paper);}
+  .btn svg{width:16px;height:16px;}
+
+  .hero-frame{position:relative;padding:14px;}
+  .hero-frame img{width:100%;height:380px;object-fit:cover;filter:saturate(0.94);}
+  .fig-cap{
+    position:absolute;bottom:-1px;right:-1px;background:var(--ink);color:var(--paper);
+    font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.06em;
+    padding:6px 10px;
+  }
+
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-frame{order:-1;}
+  }
+
+  /* ---------- Section shell ---------- */
+  .section{padding:96px 0;border-top:1px solid var(--line);}
+  .section-head{max-width:640px;margin-bottom:52px;display:flex;align-items:baseline;gap:16px;}
+  .section-num{font-family:'IBM Plex Mono',monospace;font-size:0.85rem;color:var(--accent-deep);flex:none;}
+  .section-head h2{font-size:clamp(1.6rem,2.8vw,2.1rem);font-weight:700;}
+  .section-dark{background:var(--ink);color:var(--paper);border-top:none;}
+  .section-dark .section-num{color:#ff9a5c;}
+  .section-dark .section-head p{color:#b9c0d6;}
+
+  /* ---------- Services spec-list ---------- */
+  .spec-list{border-top:1px solid var(--line);}
+  .spec-row{
+    display:grid;grid-template-columns:64px 1fr 2fr;gap:24px;
+    padding:26px 0;border-bottom:1px solid var(--line);align-items:baseline;
+  }
+  .spec-row .num{font-family:'IBM Plex Mono',monospace;color:var(--accent-deep);font-size:0.9rem;}
+  .spec-row h3{font-size:1.08rem;font-weight:600;}
+  .spec-row p{margin:0;color:var(--ink-soft);font-size:0.94rem;max-width:52ch;}
+  @media (max-width:700px){
+    .spec-row{grid-template-columns:36px 1fr;}
+    .spec-row p{grid-column:2/3;}
+  }
+
+  /* ---------- Blueprint diagram (signature) ---------- */
+  .blueprint-wrap{position:relative;padding:40px;border:1px solid rgba(247,246,241,0.25);}
+  .blueprint-svg{width:100%;height:auto;display:block;}
+  .blueprint-note{
+    margin-top:28px;font-family:'IBM Plex Mono',monospace;font-size:0.82rem;color:#b9c0d6;
+    max-width:60ch;
+  }
+
+  /* ---------- Why us ---------- */
+  .why-wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .why-photo{position:relative;padding:14px;}
+  .why-photo img{width:100%;height:340px;object-fit:cover;filter:saturate(0.94);}
+  .stat-list{display:flex;flex-direction:column;}
+  .stat-row{
+    display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;
+    padding:20px 0;border-bottom:1px dashed var(--line);
+  }
+  .stat-row:first-child{border-top:1px dashed var(--line);}
+  .stat-row h3{font-size:0.98rem;font-weight:600;}
+  .stat-row p{margin:4px 0 0;color:var(--ink-soft);font-size:0.88rem;max-width:38ch;}
+  .stat-row .tick{font-family:'IBM Plex Mono',monospace;color:var(--accent-deep);font-size:0.85rem;}
+  @media (max-width:800px){.why-wrap{grid-template-columns:1fr;}.why-photo{order:-1;}}
+
+  /* ---------- Process ---------- */
+  .process-line{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+  .process-line::before{
+    content:"";position:absolute;top:17px;left:0;right:0;height:1px;
+    background-image:linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 12px);
+    background-size:12px 1px;
+  }
+  .process-step{position:relative;padding-right:20px;}
+  .process-dot{
+    width:36px;height:36px;border:1.5px solid var(--ink);background:var(--paper);
+    display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;margin-bottom:18px;position:relative;z-index:1;
+  }
+  .process-step h3{font-size:0.98rem;font-weight:600;margin-bottom:6px;}
+  .process-step p{margin:0;color:var(--ink-soft);font-size:0.88rem;}
+  @media (max-width:800px){
+    .process-line{grid-template-columns:1fr 1fr;gap:32px 20px;}
+    .process-line::before{display:none;}
+  }
+  @media (max-width:480px){.process-line{grid-template-columns:1fr;}}
+
+  /* ---------- Photo banner ---------- */
+  .photo-banner{position:relative;height:260px;overflow:hidden;margin:0 28px;}
+  .photo-banner img{width:100%;height:100%;object-fit:cover;filter:saturate(0.9);}
+  .photo-banner-cap{
+    position:absolute;left:0;bottom:0;background:var(--ink);color:var(--paper);
+    font-family:'IBM Plex Mono',monospace;font-size:0.78rem;padding:10px 16px;max-width:70%;
+  }
+  @media (max-width:600px){.photo-banner{height:180px;margin:0 16px;}}
+
+  /* ---------- Contact / title block ---------- */
+  .contact-section{padding-top:80px;}
+  .contact-top{max-width:640px;margin-bottom:44px;}
+  .contact-phone-line{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-top:18px;}
+  .contact-phone{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5.5vw,3.1rem);font-weight:700;color:var(--accent-deep);}
+  .title-block{border:1px solid var(--ink);}
+  .tb-row{display:grid;grid-template-columns:200px 1fr;border-top:1px solid var(--ink);}
+  .tb-row:first-child{border-top:none;}
+  .tb-label{
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--ink-soft);padding:16px 18px;border-right:1px solid var(--ink);background:rgba(20,33,61,0.03);
+  }
+  .tb-value{padding:16px 18px;font-size:0.96rem;}
+  @media (max-width:600px){
+    .tb-row{grid-template-columns:140px 1fr;}
+  }
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink);color:#b9c0d6;padding:32px 0;font-size:0.84rem;}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  footer a:hover{color:var(--paper);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">ASSERBO TAGDÆKNING<small>Nordsjælland</small></div>
+    <nav class="nav-links">
+      <a href="#ydelser">Ydelser</a>
+      <a href="#opbygning">Opbygning</a>
+      <a href="#kontakt">Kontakt</a>
+      <a class="call-pill" href="tel:22167400">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"/></svg>
+        22 16 74 00
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero grid-bg">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="spec-tag">§ Tagdækning · Nordsjælland</div>
+        <h1>Tage tegnet til at holde, ikke bare se godt ud.</h1>
+        <p class="lede">Vi lægger, reparerer og renoverer tage til huse og sommerhuse mellem Liseleje og Frederiksværk — med samme omhu for detaljen, som når en byggetegning skal stemme på millimeteren.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="tel:22167400">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"/></svg>
+            Ring 22 16 74 00
+          </a>
+          <a class="btn btn-ghost" href="#ydelser">Se ydelser</a>
+        </div>
+      </div>
+
+      <div class="hero-frame marked">
+        <span class="m-bl"></span><span class="m-br"></span>
+        <img src="https://images.unsplash.com/photo-1763665814538-8ba04597286c?auto=format&fit=crop&w=1000&q=80" alt="Håndværkere lægger tagsten på et nyt tag">
+        <span class="fig-cap">FIG. 01 — Tagsten lægges</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= YDELSER ================= -->
+  <section class="section" id="ydelser">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">§01</span>
+        <h2>Ydelser</h2>
+      </div>
+
+      <div class="spec-list">
+        <div class="spec-row">
+          <span class="num">01</span>
+          <h3>Tagpap &amp; flade tage</h3>
+          <p>Vandtætte løsninger til garager, udestuer og sommerhuse — svejset og lagt med omhu i alle samlinger og inddækninger.</p>
+        </div>
+        <div class="spec-row">
+          <span class="num">02</span>
+          <h3>Tegl- &amp; betontag</h3>
+          <p>Klassiske tagsten lagt tæt og lige, kurve for kurve, så taget både ser rigtigt ud og holder i generationer.</p>
+        </div>
+        <div class="spec-row">
+          <span class="num">03</span>
+          <h3>Reparation &amp; vedligehold</h3>
+          <p>Utætheder, løse tagsten og stormskader — vi rykker hurtigt ud, finder årsagen og lukker taget tæt igen.</p>
+        </div>
+        <div class="spec-row">
+          <span class="num">04</span>
+          <h3>Ovenlys &amp; inddækninger</h3>
+          <p>Tætning omkring skorstene, kviste og ovenlysvinduer — der, hvor vand og blæst oftest finder vej ind.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BLUEPRINT / OPBYGNING ================= -->
+  <section class="section section-dark" id="opbygning">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">§02</span>
+        <h2>Sådan bygger vi taget op</h2>
+      </div>
+
+      <div class="blueprint-wrap">
+        <svg class="blueprint-svg" viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0 0 L8 4 L0 8 Z" fill="#f7f6f1"/>
+            </marker>
+          </defs>
+          <!-- baseline -->
+          <line x1="60" y1="320" x2="840" y2="320" stroke="#3a4568" stroke-width="1"/>
+          <!-- roof line (cross-section, simple gable) -->
+          <polyline points="140,320 450,110 760,320" fill="none" stroke="#f7f6f1" stroke-width="2.5"/>
+          <!-- rafter (spær) marker line -->
+          <line x1="450" y1="110" x2="450" y2="320" stroke="#5a6690" stroke-width="1" stroke-dasharray="4 4"/>
+
+          <!-- layer callouts along the right slope -->
+          <!-- spær -->
+          <circle cx="620" cy="235" r="3" fill="#ff9a5c"/>
+          <line x1="620" y1="235" x2="700" y2="180" stroke="#ff9a5c" stroke-width="1"/>
+          <text x="706" y="184" fill="#f7f6f1" font-family="IBM Plex Mono, monospace" font-size="13">01 — Spær</text>
+
+          <!-- undertag -->
+          <circle cx="580" cy="205" r="3" fill="#ff9a5c"/>
+          <line x1="580" y1="205" x2="700" y2="140" stroke="#ff9a5c" stroke-width="1"/>
+          <text x="706" y="144" fill="#f7f6f1" font-family="IBM Plex Mono, monospace" font-size="13">02 — Undertag</text>
+
+          <!-- lægter -->
+          <circle cx="540" cy="176" r="3" fill="#ff9a5c"/>
+          <line x1="540" y1="176" x2="700" y2="100" stroke="#ff9a5c" stroke-width="1"/>
+          <text x="706" y="104" fill="#f7f6f1" font-family="IBM Plex Mono, monospace" font-size="13">03 — Lægter</text>
+
+          <!-- tagpap/tagsten -->
+          <circle cx="500" cy="147" r="3" fill="#ff9a5c"/>
+          <line x1="500" y1="147" x2="700" y2="60" stroke="#ff9a5c" stroke-width="1"/>
+          <text x="706" y="64" fill="#f7f6f1" font-family="IBM Plex Mono, monospace" font-size="13">04 — Tagpap / tagsten</text>
+
+          <!-- pitch angle arc + label -->
+          <path d="M170 320 A60 60 0 0 1 200 274" fill="none" stroke="#8b96bf" stroke-width="1"/>
+          <text x="178" y="300" fill="#b9c0d6" font-family="IBM Plex Mono, monospace" font-size="12">∡</text>
+
+          <!-- dimension line under roof -->
+          <line x1="140" y1="345" x2="760" y2="345" stroke="#5a6690" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+          <text x="420" y="365" fill="#8b96bf" font-family="IBM Plex Mono, monospace" font-size="12">Spændvidde tilpasses husets konstruktion</text>
+        </svg>
+
+        <p class="blueprint-note">Vi tjekker altid den bærende konstruktion (01), lægger et diffusionsåbent undertag (02), sætter lægter i nøjagtig afstand (03), og afslutter med tagpap eller tagsten (04) — så hvert lag gør sit for at holde vejret ude.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHY US ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">§03</span>
+        <h2>Hvorfor Asserbo Tagdækning</h2>
+      </div>
+
+      <div class="why-wrap">
+        <div class="stat-list">
+          <div class="stat-row">
+            <div>
+              <h3>Lokalkendskab til Nordsjælland</h3>
+              <p>Vi kender husene og sommerhusene langs kysten — og det vejr, tagene her skal holde til.</p>
+            </div>
+            <span class="tick">01</span>
+          </div>
+          <div class="stat-row">
+            <div>
+              <h3>Fast pris, før vi går i gang</h3>
+              <p>Du får en klar aftale om omfang og pris, inden det første tagsten bliver løftet.</p>
+            </div>
+            <span class="tick">02</span>
+          </div>
+          <div class="stat-row">
+            <div>
+              <h3>Ryddeligt fra dag ét</h3>
+              <p>Vi rydder op efter os hver eneste dag — dit hus og din have skal ikke ligge og vente.</p>
+            </div>
+            <span class="tick">03</span>
+          </div>
+          <div class="stat-row">
+            <div>
+              <h3>Hurtig responstid ved skader</h3>
+              <p>Storm eller utæthed venter ikke — ring, og vi vurderer sagen hurtigst muligt.</p>
+            </div>
+            <span class="tick">04</span>
+          </div>
+        </div>
+
+        <div class="why-photo marked">
+          <span class="m-bl"></span><span class="m-br"></span>
+          <img src="https://images.unsplash.com/photo-1623062284286-febaf4f87d0c?auto=format&fit=crop&w=900&q=80" alt="Tætte tagsten lagt i nøjagtige rækker">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">§04</span>
+        <h2>Sådan foregår det</h2>
+      </div>
+
+      <div class="process-line">
+        <div class="process-step">
+          <div class="process-dot">01</div>
+          <h3>Du ringer eller skriver</h3>
+          <p>Fortæl kort om taget og hvad der er galt, eller hvad du gerne vil have lavet.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-dot">02</div>
+          <h3>Vi besigtiger taget</h3>
+          <p>Vi kommer forbi, ser på konstruktionen og finder den løsning, der passer til huset.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-dot">03</div>
+          <h3>Du får et fast tilbud</h3>
+          <p>Klar pris og tidsplan, skriftligt, før vi rører ved noget.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-dot">04</div>
+          <h3>Vi udfører og rydder op</h3>
+          <p>Arbejdet bliver udført til aftalt tid, og pladsen er ryddet, når vi går.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PHOTO BANNER ================= -->
+  <div class="photo-banner marked">
+    <span class="m-bl"></span><span class="m-br"></span>
+    <img src="https://images.unsplash.com/photo-1644604120663-4e5fcdf33104?auto=format&fit=crop&w=1600&q=80" alt="Tætte tagsten set ovenfra">
+    <span class="photo-banner-cap">FIG. 02 — Hver tagsten lagt, så vandet løber den rigtige vej</span>
+  </div>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section contact-section" id="kontakt">
+    <div class="wrap">
+      <div class="section-head contact-top">
+        <span class="section-num">§05</span>
+        <h2>Klar til et uforpligtende tilbud?</h2>
+      </div>
+
+      <div class="contact-phone-line">
+        <a href="tel:22167400" class="contact-phone">22 16 74 00</a>
+        <a class="btn btn-primary" href="tel:22167400">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"/></svg>
+          Ring nu
+        </a>
+      </div>
+
+      <div class="title-block" style="margin-top:48px;">
+        <div class="tb-row">
+          <div class="tb-label">Firma</div>
+          <div class="tb-value">Asserbo Tagdækning ApS</div>
+        </div>
+        <div class="tb-row">
+          <div class="tb-label">Telefon</div>
+          <div class="tb-value"><a href="tel:22167400">22 16 74 00</a></div>
+        </div>
+        <div class="tb-row">
+          <div class="tb-label">Åbningstid</div>
+          <div class="tb-value">Man–fre: 07:00–16:00 · Akutte skader vurderes hurtigst muligt</div>
+        </div>
+        <div class="tb-row">
+          <div class="tb-label">Dækker</div>
+          <div class="tb-value">Halsnæs, Frederiksværk, Hundested, Liseleje, Tisvildeleje, Gilleleje</div>
+        </div>
+        <div class="tb-row">
+          <div class="tb-label">Opgavetype</div>
+          <div class="tb-value">Helårshuse, sommerhuse og mindre erhvervsbygninger</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 Asserbo Tagdækning ApS</span>
+    <span class="mono">Nordsjælland</span>
+    <a href="tel:22167400">22 16 74 00</a>
+  </div>
+</footer>
+
+</body>
+</html>
